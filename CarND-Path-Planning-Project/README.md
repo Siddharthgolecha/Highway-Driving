@@ -90,6 +90,7 @@ the path has processed since last time.
     ```
 
 <a name="model"/>
+
 ## Model Documentation
 
 Path Planning refers to generating safe and drivable path for a vehicle to reach its goal. It consists of 3 parts.
@@ -100,6 +101,7 @@ Path Planning refers to generating safe and drivable path for a vehicle to reach
 ![vehicle model](vehicle.png)
 
 <a name="p"/>
+
 ### 1. Prediction
 
 The **prediction** is based on the information of other vehicles from the sensor fusion in the helper.h file from line 162-190. It first filter the vehicles within 100m from the ego vehicle, then use the predicted neighbouring vehicles end locations based on the same direction and speed to see if there are vehicles in the front in the same lane, in the left lane and right lane.
@@ -139,6 +141,7 @@ vector<double> get_predictions(vector<vector<double>> sensor_fusion, int prev_si
 }
 ```
 <a name="b"/>
+
 ### 2. Behaviour Planning
 
 The **behaviour planning** is based on the predictions. When there is no car in the front in the same lane, it can drive at 49.5 mph. Otherwise it can choose to stay in the same lane, change to left or right if allowed. This can be done by a finite state machine (FSM) but I simply used a vector of chosen lane and reference velocity to represent the states "keep lane", "lane change to left" and "lane change to right". It will generate a list of choices.
