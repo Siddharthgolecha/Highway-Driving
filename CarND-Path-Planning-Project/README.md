@@ -1,7 +1,7 @@
 # CarND-Path-Planning-Project
 Self-Driving Car Engineer Nanodegree Program
 
-![Model Details available here!](#Model Documentation)
+[Model Details available here!](#model)
    
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2).  
@@ -88,16 +88,18 @@ the path has processed since last time.
     cd uWebSockets
     git checkout e94b6e1
     ```
-    
+
+<a name="model"/>
 ## Model Documentation
 
 Path Planning refers to generating safe and drivable path for a vehicle to reach its goal. It consists of 3 parts.
-![1. Prediction](#1. Predction)
-![2. Behaviour Planning](#2. Behaviour Planning)
-![3. Trajectory Generation](#3. Trajectory Generation)
+[1. Prediction](#p)
+[2. Behaviour Planning](#b)
+[3. Trajectory Generation](#t)
 
 ![vehicle model](vehicle.png)
 
+<a name="p"/>
 ### 1. Prediction
 
 The **prediction** is based on the information of other vehicles from the sensor fusion in the helper.h file from line 162-190. It first filter the vehicles within 100m from the ego vehicle, then use the predicted neighbouring vehicles end locations based on the same direction and speed to see if there are vehicles in the front in the same lane, in the left lane and right lane.
@@ -136,7 +138,7 @@ vector<double> get_predictions(vector<vector<double>> sensor_fusion, int prev_si
   return {(double)car_left, (double)car_right, (double)car_front, front_speed};
 }
 ```
-
+<a name="b"/>
 ### 2. Behaviour Planning
 
 The **behaviour planning** is based on the predictions. When there is no car in the front in the same lane, it can drive at 49.5 mph. Otherwise it can choose to stay in the same lane, change to left or right if allowed. This can be done by a finite state machine (FSM) but I simply used a vector of chosen lane and reference velocity to represent the states "keep lane", "lane change to left" and "lane change to right". It will generate a list of choices.
@@ -159,7 +161,7 @@ vector<std::pair<int, double>> behaviour_planning(bool car_left, bool car_right,
 }
 
 ```
-
+<a name="t"/>
 ### 3. Trajectory Generation
 
 Then the **trajectory** shall be generated and the cost of the trajectory should be calculated and compared to find the least-cost trajectory. I followed the Q&A guide video in the project and used the Spline to generate smooth trajectories. I calculated the cost for each choice between lines 211 and 236. In the calculation, I only considered the lane change, speed limit, and acceleration.
