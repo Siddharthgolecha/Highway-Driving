@@ -93,9 +93,9 @@ the path has processed since last time.
 ## Model Documentation
 
 Path Planning refers to generating safe and drivable path for a vehicle to reach its goal. It consists of 3 parts.
-[1. Prediction](#p)
-[2. Behaviour Planning](#b)
-[3. Trajectory Generation](#t)
+1. [Prediction](#p)
+2. [Behaviour Planning](#b)
+3. [Trajectory Generation](#t)
 
 ![vehicle model](vehicle.png)
 
@@ -162,7 +162,8 @@ vector<std::pair<int, double>> behaviour_planning(bool car_left, bool car_right,
 
 ```
 <a name="t"/>
-### 3. Trajectory Generation
+  
+### 3. Trajectory Generation  
 
 Then the **trajectory** shall be generated and the cost of the trajectory should be calculated and compared to find the least-cost trajectory. I followed the Q&A guide video in the project and used the Spline to generate smooth trajectories. I calculated the cost for each choice between lines 211 and 236. In the calculation, I only considered the lane change, speed limit, and acceleration.
 
